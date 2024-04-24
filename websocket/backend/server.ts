@@ -6,7 +6,12 @@ import { io } from "./src/libs/socket.js";
 
 io.on("connection", (socket) => {
   console.log("server id", socket.id);
-  socket.emit('event', 'Any thing it cloud be')
+
+  socket.on("message", (payload) => {
+    console.log(payload);
+
+    io.emit("chats", { message: payload, user: socket.id });
+  });
 });
 
 db()
